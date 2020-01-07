@@ -1,12 +1,11 @@
-﻿using System;
-
-namespace ProxyPattern
+﻿namespace ProxyPattern
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IBusinessModule module = new BusinessModuleProxy();
+            module.Method1();
         }
     }
 }
