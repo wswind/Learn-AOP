@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1
+namespace AutofacInterceptor
 {
-    //[Intercept(typeof(CallLogger))]
     public class SomeType : ISomeType
     {
         //di called interface ,the attribute should be at interface

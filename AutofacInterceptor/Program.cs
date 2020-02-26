@@ -10,7 +10,7 @@ using Castle.DynamicProxy;
 using System;
 using System.Reflection;
 
-namespace ConsoleApp1
+namespace AutofacInterceptor
 {
 
     class Program
@@ -27,15 +27,17 @@ namespace ConsoleApp1
             // Typed registration
             builder.Register(c => new CallLogger(Console.Out));
 
+             //// Named registration
+            //builder.Register(c => new CallLogger(Console.Out))
+            //       .Named<IInterceptor>("log-calls");
+
 
             // Enable Interception on Types
             //builder.RegisterType<SomeType>()
             //       .As<ISomeType>()
             //       .EnableInterfaceInterceptors()
             //       .InterceptedBy(typeof(CallLogger));
-            //// Named registration
-            //builder.Register(c => new CallLogger(Console.Out))
-            //       .Named<IInterceptor>("log-calls");
+           
 
             //var type = typeof(SomeType);
             //var typeInfo = type.GetTypeInfo();

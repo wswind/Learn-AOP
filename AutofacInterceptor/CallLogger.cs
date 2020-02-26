@@ -1,11 +1,8 @@
 ﻿using Castle.DynamicProxy;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
-namespace ConsoleApp1
+namespace AutofacInterceptor
 {
     public class CallLogger : IInterceptor
     {
@@ -19,17 +16,25 @@ namespace ConsoleApp1
         public void Intercept(IInvocation invocation)
         {
             _output.WriteLine("Calling method '{0}' with parameters '{1}'... ",
-              invocation.Method.Name,
-              string.Join(", ", invocation.Arguments.Select(a => (a ?? "").ToString()).ToArray()));
+                invocation.Method.Name,
+                string.Join(", ", invocation.Arguments.Select(a => (a ?? "").ToString()).ToArray()));
 
-            if(LoggerHelper.IsLoggerEnabled(invocation.Method))
+            //校验方法是否需要开启了Logger
+            bool isEnabled = AttributeHelper.IsLoggerEnabled(invocation.Method);
+
+            //方法执行前
+            if (isEnabled)
             {
                 _output.WriteLine("Logger is Enabled");
             }
-
+            //被拦截的方法执行
             invocation.Proceed();
 
-            _output.WriteLine("Done: result was '{0}'.", invocation.ReturnValue);
+            //方法执行后
+            if (isEnabled)
+            {
+                _output.WriteLine("Done: result was '{0}'.", invocation.ReturnValue);
+            }
         }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ConsoleApp1
+namespace AutofacInterceptor
 {
 
-    //[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     [AttributeUsage(AttributeTargets.Method)]
     public class CustomAttribute : Attribute
     {
