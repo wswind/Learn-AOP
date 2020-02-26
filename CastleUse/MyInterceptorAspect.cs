@@ -3,13 +3,13 @@ using Castle.DynamicProxy;
 
 namespace CastleUse
 {
-    public class MyInterceptorAspect : IInterceptor
+public class MyInterceptorAspect : IInterceptor
+{
+    public void Intercept(IInvocation invocation)
     {
-        public void Intercept(IInvocation invocation)
-        {
-            Console.WriteLine("Interceptor before");
-            invocation.Proceed();
-            Console.WriteLine("Interceptor after");
-        }
+        Console.WriteLine("Interceptor before");
+        invocation.Proceed();
+        Console.WriteLine("Interceptor after");
     }
+}
 }
