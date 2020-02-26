@@ -7,7 +7,7 @@ namespace CastleUse
         static void Main(string[] args)
         {
             var proxyGenerator = new ProxyGenerator();
-            var svc = proxyGenerator.CreateClassProxy<TwitterClient>(new MyInterceptorAspect());
+            var svc = proxyGenerator.CreateClassProxy<MessageClient>(new MyInterceptorAspect());
             svc.Send("hi");
 
             var svc2 = proxyGenerator.CreateInterfaceProxyWithTarget<IHelloClient>(new HelloClient(), new MyInterceptorAspect());

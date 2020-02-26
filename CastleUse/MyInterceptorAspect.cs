@@ -1,12 +1,15 @@
 using System;
 using Castle.DynamicProxy;
 
-public class MyInterceptorAspect : IInterceptor
+namespace CastleUse
 {
-    public void Intercept(IInvocation invocation)
+    public class MyInterceptorAspect : IInterceptor
     {
-        Console.WriteLine("Interceptor 1");
-        invocation.Proceed();
-        Console.WriteLine("Interceptor 2");
+        public void Intercept(IInvocation invocation)
+        {
+            Console.WriteLine("Interceptor before");
+            invocation.Proceed();
+            Console.WriteLine("Interceptor after");
+        }
     }
 }

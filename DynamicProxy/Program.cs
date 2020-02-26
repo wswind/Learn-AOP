@@ -9,59 +9,59 @@ namespace DynamicProxy
         static void Main(string[] args)
         {
             var type = CreateDynamicProxyType();
-            var dynamicProxy = (ITwitterService)Activator.CreateInstance(
-            type, new object[] { new MyTwitterService() });
-            dynamicProxy.Tweet("My tweet message!");
+            var dynamicProxy = (IBusinessModule)Activator.CreateInstance(
+            type, new object[] { new BusinessModule() });
+            dynamicProxy.Method1("Hello DynamicProxy!");
         }
         static Type CreateDynamicProxyType()
         {
             var assemblyName = new AssemblyName("MyProxies");
             var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName,
-                                                       AssemblyBuilderAccess.Run);
+                                                       AssemblyBuilderAccess.Run);      
             var modBuilder = assemblyBuilder.DefineDynamicModule("MyProxies");
 
             var typeBuilder = modBuilder.DefineType(
-                "MyTwitterServiceProxy",
+                "BusinessModuleProxy",
                 TypeAttributes.Public | TypeAttributes.Class,
                 typeof(object),
-                new[] { typeof(ITwitterService) });
+                new[] { typeof(IBusinessModule) });
            
             var fieldBuilder = typeBuilder.DefineField(
                 "_realObject",
-                typeof (MyTwitterService),
+                typeof (BusinessModule),
                 FieldAttributes.Private);
             var constructorBuilder = typeBuilder.DefineConstructor(
                 MethodAttributes.Public,
                 CallingConventions.HasThis,
-                new[] {typeof (MyTwitterService)});
+                new[] {typeof (BusinessModule)});
                 var contructorIl = constructorBuilder.GetILGenerator();
             contructorIl.Emit(OpCodes.Ldarg_0);
             contructorIl.Emit(OpCodes.Ldarg_1);
             contructorIl.Emit(OpCodes.Stfld, fieldBuilder);
             contructorIl.Emit(OpCodes.Ret);
-            var methodBuilder = typeBuilder.DefineMethod("Tweet",
+            var methodBuilder = typeBuilder.DefineMethod("Method1",
                                 MethodAttributes.Public | MethodAttributes.Virtual,
                                 typeof (void),
                                 new[] {typeof (string)});
                                 typeBuilder.DefineMethodOverride(methodBuilder,
-                                typeof (ITwitterService).GetMethod("Tweet"));
-                                var tweetIl = methodBuilder.GetILGenerator();
+                                typeof (IBusinessModule).GetMethod("Method1"));
+                                var method1 = methodBuilder.GetILGenerator();
 
             //Console.Writeline
-            tweetIl.Emit(OpCodes.Ldstr, "Hello before!");
-            tweetIl.Emit(OpCodes.Call, typeof (Console).GetMethod("WriteLine", new[] {typeof (string)}));
+            method1.Emit(OpCodes.Ldstr, "Method1 before!");
+            method1.Emit(OpCodes.Call, typeof (Console).GetMethod("WriteLine", new[] {typeof (string)}));
             //load arg0 (this)
-            tweetIl.Emit(OpCodes.Ldarg_0);
+            method1.Emit(OpCodes.Ldarg_0);
             //load _realObject
-            tweetIl.Emit(OpCodes.Ldfld, fieldBuilder);
+            method1.Emit(OpCodes.Ldfld, fieldBuilder);
             //load argument1
-            tweetIl.Emit(OpCodes.Ldarg_1);
-            //call tweet
-            tweetIl.Emit(OpCodes.Call,fieldBuilder.FieldType.GetMethod("Tweet"));
+            method1.Emit(OpCodes.Ldarg_1);
+            //call Method1
+            method1.Emit(OpCodes.Call,fieldBuilder.FieldType.GetMethod("Method1"));
             //Console.Writeline
-            tweetIl.Emit(OpCodes.Ldstr, "Hello after!");
-            tweetIl.Emit(OpCodes.Call, typeof (Console).GetMethod("WriteLine", new[] {typeof (string)}));
-            tweetIl.Emit(OpCodes.Ret);
+            method1.Emit(OpCodes.Ldstr, "Method1 after!");
+            method1.Emit(OpCodes.Call, typeof (Console).GetMethod("WriteLine", new[] {typeof (string)}));
+            method1.Emit(OpCodes.Ret);
             return  typeBuilder.CreateType();
 
         }
