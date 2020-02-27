@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutofacAsyncInterceptor
 {
+    //see:https://github.com/JSkimming/Castle.Core.AsyncInterceptor/issues/42
     public class CallLogger : AsyncDeterminationInterceptor
     {
         public CallLogger(CallLoggerAsync adapter)
