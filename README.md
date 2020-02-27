@@ -532,7 +532,7 @@ public static class AttributeHelper
 
 通过控制台的Main函数进行代码调用
 
-```
+```csharp
 static void Main(string[] args)
 {
     // create builder
