@@ -1,29 +1,29 @@
 ﻿using System.Linq;
 using System.Reflection;
 
-namespace AutofacInterceptor
+namespace AutofacAsyncInterceptor
 {
     //use MemberInfo or MethodInfo
-public static class AttributeHelper
-{
-    public static bool IsLoggerEnabled(MethodInfo type)
+    public static class AttributeHelper
     {
-        return GetStartLog(type);
-    }
-    public static bool HasCustomAttribute(MemberInfo methodInfo)
-    {
-       return methodInfo.IsDefined(typeof(CustomAttribute), true);
-    }
-
-    private static bool GetStartLog(MethodInfo methodInfo)
-    {
-        var attrs = methodInfo.GetCustomAttributes(true).OfType<CustomAttribute>().ToArray();
-        if (attrs.Any())
+        public static bool IsLoggerEnabled(MethodInfo type)
         {
-            CustomAttribute customAttribute = attrs.First();
-            return customAttribute.StartLog;
+            return GetStartLog(type);
         }
-        return false;
+        public static bool HasCustomAttribute(MemberInfo methodInfo)
+        {
+            return methodInfo.IsDefined(typeof(CustomAttribute), true);
+        }
+
+        private static bool GetStartLog(MethodInfo methodInfo)
+        {
+            var attrs = methodInfo.GetCustomAttributes(true).OfType<CustomAttribute>().ToArray();
+            if (attrs.Any())
+            {
+                CustomAttribute customAttribute = attrs.First();
+                return customAttribute.StartLog;
+            }
+            return false;
+        }
     }
-}
 }

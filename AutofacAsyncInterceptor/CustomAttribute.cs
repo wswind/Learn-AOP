@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutofacInterceptor
+namespace AutofacAsyncInterceptor
 {
 
     [AttributeUsage(AttributeTargets.Method)]

@@ -8,7 +8,7 @@ using Autofac;
 using Autofac.Extras.DynamicProxy;
 using System;
 
-namespace AutofacInterceptor
+namespace AutofacAsyncInterceptor
 {
 
     class Program

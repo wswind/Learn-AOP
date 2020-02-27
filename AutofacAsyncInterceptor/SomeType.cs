@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AutofacInterceptor
+namespace AutofacAsyncInterceptor
 {
     public class SomeType : ISomeType
     {

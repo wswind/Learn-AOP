@@ -1,7 +1,7 @@
 ﻿using Autofac.Extras.DynamicProxy;
 using System.Threading.Tasks;
 
-namespace AutofacInterceptor
+namespace AutofacAsyncInterceptor
 {
     [Intercept(typeof(CallLogger))]
     public interface ISomeType

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AutofacInterceptor
+namespace AutofacAsyncInterceptor
 {
     public class CallLogger : AsyncDeterminationInterceptor
     {
@@ -58,7 +58,7 @@ namespace AutofacInterceptor
             //after invocation
             if (isEnabled)
             {
-                _output.WriteLine("Done: result was '{0}'.", invocation.ReturnValue);
+                _output.WriteLine("Done: result was '{0}'.", result);
             }
 
             return result;
