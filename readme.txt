@@ -1,1 +1,0 @@
-learn form aop in .net
