@@ -6,7 +6,6 @@
 
 using Autofac;
 using Autofac.Extras.DynamicProxy;
-using AutofacInterceptor;
 using System;
 
 namespace AutofacAsyncInterceptor
