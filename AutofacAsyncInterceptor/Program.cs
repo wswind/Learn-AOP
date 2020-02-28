@@ -6,6 +6,7 @@
 
 using Autofac;
 using Autofac.Extras.DynamicProxy;
+using AutofacInterceptor;
 using System;
 
 namespace AutofacAsyncInterceptor
@@ -21,28 +22,12 @@ namespace AutofacAsyncInterceptor
             builder.RegisterType<SomeType>()
               .As<ISomeType>()
               .EnableInterfaceInterceptors();
-
+             
+            //register adapter
             builder.RegisterType<CallLogger>();
-
-            // Typed registration
+            //register async interceptor
             builder.Register(c => new CallLoggerAsync(Console.Out));
 
-            //// Named registration
-            //builder.Register(c => new CallLogger(Console.Out))
-            //       .Named<IInterceptor>("log-calls");
-
-
-            // Enable Interception on Types
-            //builder.RegisterType<SomeType>()
-            //       .As<ISomeType>()
-            //       .EnableInterfaceInterceptors()
-            //       .InterceptedBy(typeof(CallLogger));
-
-
-            //var type = typeof(SomeType);
-            //var typeInfo = type.GetTypeInfo();
-            //var b = LoggerHelper.IsLoggerEnabled(typeInfo);
-           
             var container = builder.Build();
             var willBeIntercepted = container.Resolve<ISomeType>();
             willBeIntercepted.Show("this is a test");

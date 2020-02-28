@@ -36,8 +36,7 @@ namespace AutofacInterceptor
             //builder.RegisterType<SomeType>()
             //       .As<ISomeType>()
             //       .EnableInterfaceInterceptors()
-            //       .InterceptedBy(typeof(CallLogger));
-           
+            //       .InterceptedBy(typeof(CallLogger));//or by name: .InterceptedBy("log-calls");
 
             //var type = typeof(SomeType);
             //var typeInfo = type.GetTypeInfo();
