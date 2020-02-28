@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace AutofacAsyncInterceptor
 {
-    [Intercept(typeof(CallLogger))]
+    [Intercept(typeof(AsyncInterceptorAdaper<CallLoggerAsyncInterceptor>))]
     public interface ISomeType
     {
         [Custom(StartLog = true)]

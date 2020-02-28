@@ -10,7 +10,6 @@ using System;
 
 namespace AutofacAsyncInterceptor
 {
-
     class Program
     {
         static void Main(string[] args)
@@ -23,9 +22,9 @@ namespace AutofacAsyncInterceptor
               .EnableInterfaceInterceptors();
              
             //register adapter
-            builder.RegisterType<CallLogger>();
+            builder.RegisterGeneric(typeof(AsyncInterceptorAdaper<>));
             //register async interceptor
-            builder.Register(c => new CallLoggerAsync(Console.Out));
+            builder.Register(c => new CallLoggerAsyncInterceptor(Console.Out));
 
             var container = builder.Build();
             var willBeIntercepted = container.Resolve<ISomeType>();

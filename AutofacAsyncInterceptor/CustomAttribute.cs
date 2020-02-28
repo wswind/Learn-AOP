@@ -2,7 +2,6 @@
 
 namespace AutofacAsyncInterceptor
 {
-
     [AttributeUsage(AttributeTargets.Method)]
     public class CustomAttribute : Attribute
     {

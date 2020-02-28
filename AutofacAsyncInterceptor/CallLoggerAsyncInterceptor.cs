@@ -4,23 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+//https://github.com/JSkimming/Castle.Core.AsyncInterceptor/issues/42
 namespace AutofacAsyncInterceptor
 {
-    //see:https://github.com/JSkimming/Castle.Core.AsyncInterceptor/issues/42
-    public class CallLogger : AsyncDeterminationInterceptor
-    {
-        public CallLogger(CallLoggerAsync adapter)
-            :base(adapter)
-        {
-           
-        }
-    }
-
-    public class CallLoggerAsync : AsyncInterceptorBase  
+    public class CallLoggerAsyncInterceptor : AsyncInterceptorBase  
     {
         TextWriter _output;
 
-        public CallLoggerAsync(TextWriter output)
+        public CallLoggerAsyncInterceptor(TextWriter output)
         {
             _output = output;
         }
