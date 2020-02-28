@@ -421,15 +421,14 @@ Castle.Core是一个很有用的动态代理插件，很多开源组件都使用
 
 > autofac拦截器的详细文档请浏览：<https://autofac.readthedocs.io/en/latest/advanced/interceptors.html>
 >
-> 对于异步方法的拦截，可以使用这个帮助库：<https://github.com/JSkimming/Castle.Core.AsyncInterceptor>
 
 
 
-和之前一样，我创建一个拦截器，拦截特定方法的执行，并在执行前后进行控制台打印。
+和之前一样，我创建了一个拦截器，拦截特定方法的执行，并在执行前后进行控制台打印。
 
 另外，我定义了一个自定义属性(Attribute)来设置方法是否需要使用日志，如果开启了，才进行日志打印。
 
-**通过自定义属性对方法进行声明，从而影响AOP拦截器的行为，这种方式可以很好的实现代码复用。**
+**通过自定义属性对方法进行声明，从而影响AOP拦截器的方式，可以使代码更加直观，简化代码逻辑。**
 
 拦截器CallLogger代码如下：
 
@@ -561,13 +560,23 @@ showdemo
 Done: result was 'resultdemo'.
 ```
 
+关于异步方法的拦截，这一补充一点：
+
+Castle.Core目前没有原生支持异步方法的拦截，你需要在拦截器对异步方法进行一些额外的处理。
+
+Autofac对这个问题也没有内置支持：<https://autofac.readthedocs.io/en/latest/advanced/interceptors.html#asynchronous-method-interception>
+
+你可以通过Task.ContinueWith()来处理异步情况，或者通过第三方的帮助库来实现异步方法的拦截：<https://github.com/JSkimming/Castle.Core.AsyncInterceptor>
+
+对于Autofac的异步拦截器的代码样例，可查看：<https://github.com/wswind/aop-learn/tree/master/AutofacAsyncInterceptor>
+
+另外：Structuremap 是有异步拦截器支持的，可查看拓展阅读中链接。
+
 
 
 最后，希望本文对你有帮助。如果本文有错误欢迎在评论中指出。
 
-update:
 
-添加了autofac async interceptor代码样例，可在代码库中查看。
 
 
 > 拓展阅读：
