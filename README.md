@@ -591,7 +591,7 @@ Autofac对这个问题也没有内置支持：<https://autofac.readthedocs.io/en
 >
 > .NET Core 默认IoC容器结合适配器模式  <https://medium.com/@willie.tetlow/net-core-dependency-injection-decorator-workaround-664cd3ec1246>>
 >
-> Simple .NET Aspect-Oriented Programming ：<https://github.com/TylerBrinks/Snap>)
+> Simple .NET Aspect-Oriented Programming ：<https://github.com/TylerBrinks/Snap>
 >
 > Structuremap Interception and Decorators: <https://structuremap.github.io/interception-and-decorators>
 >
