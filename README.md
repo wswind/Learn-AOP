@@ -570,7 +570,7 @@ Autofac对这个问题也没有内置支持：<https://autofac.readthedocs.io/en
 
 对于Autofac的异步拦截器的代码样例，可查看：<https://github.com/wswind/aop-learn/tree/master/AutofacAsyncInterceptor>
 
-另外：Structuremap 是有异步拦截器支持的，可查看拓展阅读中链接。
+另外：Structuremap(sunsetted) 是有异步拦截器支持的，可查看拓展阅读中链接。
 
 
 
@@ -596,3 +596,5 @@ Autofac对这个问题也没有内置支持：<https://autofac.readthedocs.io/en
 > Structuremap Interception and Decorators: <https://structuremap.github.io/interception-and-decorators>
 >
 > StructuremapAspect Oriented Programming with StructureMap.DynamicInterception: <https://structuremap.github.io/dynamic-interception/>
+> 
+> Castle.Core 异步拦截器文档： <https://github.com/castleproject/Core/blob/master/docs/dynamicproxy-async-interception.md>
