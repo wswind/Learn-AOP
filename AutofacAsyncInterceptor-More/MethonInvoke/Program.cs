@@ -21,6 +21,8 @@ namespace AutofacAsyncInterceptor
               .As<ISomeType>()
               .EnableInterfaceInterceptors();
              
+            //register adapter
+           // builder.RegisterGeneric(typeof(AsyncInterceptorAdaper<>));
             //register async interceptor
             builder.Register(c => new CallLoggerAsyncInterceptor(Console.Out));
 
