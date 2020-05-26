@@ -28,37 +28,14 @@ namespace AutofacAsyncInterceptor
             {
                 _output.WriteLine("Before Invocation");
             }
-
             invocation.Proceed();
-            var method = invocation.MethodInvocationTarget;
-            var isAsync = method.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
-            if (isAsync && typeof(Task).IsAssignableFrom(method.ReturnType))
-            {
-                invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
-            }
-        }
-        private async Task InterceptAsync(Task task)
-        {
-            await task.ConfigureAwait(false);
-            // do the continuation work for Task...
-        }
+            var returnValue = (Task<string>)invocation.ReturnValue;
+            //string str = returnValue.Result;
 
-        private async Task<T> InterceptAsync<T>(Task<T> task)
-        {
-            T result = await task.ConfigureAwait(false);
-            // do the continuation work for Task<T>...
-            _output.WriteLine("After Invocation, Result is '{0}'.", result.ToString());
-            return result;
-        }
-
-        private async Task<T> HandleAsyncWithResult<T>(Task<T> task, IInvocation invocation)
-        {
-            var result = await task;
-            if (IsEnabled(invocation))
+            returnValue.ContinueWith(t =>
             {
-                _output.WriteLine("After Invocation, Result is '{0}'.", result);
-            }
-            return result;
+                _output.WriteLine("After Invocation" + t.Result);
+            });
         }
 
         private bool IsEnabled(IInvocation invocation)
