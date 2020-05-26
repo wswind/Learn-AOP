@@ -28,15 +28,31 @@ namespace AutofacAsyncInterceptor
             {
                 _output.WriteLine("Before Invocation");
             }
-
+            Console.WriteLine("before proceed");
             invocation.Proceed();
+            Console.WriteLine("after proceed");
 
-            var method = invocation.MethodInvocationTarget;//warn: this will run the task
-            var isAsync = method.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
-            if (isAsync && typeof(Task).IsAssignableFrom(method.ReturnType))
-            {
-                invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
-            }
+            // var method = invocation.MethodInvocationTarget;//warn: this will run the task
+            //var isAsync = method.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
+            //if (isAsync && typeof(Task).IsAssignableFrom(method.ReturnType))
+            //{
+            //    invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
+            //}
+            //Console.WriteLine("before InterceptAsync");
+
+            invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
+
+            //Task<string> t = (Task<string>)invocation.ReturnValue;
+            //var v = InterceptAsync(t).Result;
+
+
+            //Task<string> t = (Task<string>)invocation.ReturnValue;
+            //Console.WriteLine("before run");
+            //var result = t.GetAwaiter().GetResult();
+            //Console.WriteLine("after run");
+
+
+            //Console.WriteLine("after InterceptAsync");
         }
         private async Task InterceptAsync(Task task)
         {
@@ -46,7 +62,9 @@ namespace AutofacAsyncInterceptor
 
         private async Task<T> InterceptAsync<T>(Task<T> task)
         {
+            Console.WriteLine("before run task");
             T result = await task.ConfigureAwait(false);
+            Console.WriteLine("after run task");
             // do the continuation work for Task<T>...
             _output.WriteLine("After Invocation, Result is '{0}'.", result.ToString());
             return result;
