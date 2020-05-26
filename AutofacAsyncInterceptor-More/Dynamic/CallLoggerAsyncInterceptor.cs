@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-//https://stackoverflow.com/a/28374134/7726468
+//https://stackoverflow.com/a/28374134/7726468 MethodInfo invocation
 namespace AutofacAsyncInterceptor
 {
     public class CallLoggerAsyncInterceptor : IInterceptor  
