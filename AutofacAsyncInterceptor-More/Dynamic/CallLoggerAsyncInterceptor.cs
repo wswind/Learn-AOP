@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-//https://stackoverflow.com/a/28374134/7726468 MethodInfo invocation
+//https://stackoverflow.com/a/28374134/7726468
 namespace AutofacAsyncInterceptor
 {
     public class CallLoggerAsyncInterceptor : IInterceptor  
@@ -32,7 +32,7 @@ namespace AutofacAsyncInterceptor
 
             invocation.Proceed();
 
-            var taskType = invocation.Method.ReturnType;
+            var taskType = invocation.Method.ReturnType;//warnning:this line with make the task run
             var resultType = taskType.GetGenericArguments()[0];
             var mi = HandleAsyncWithResultMethodInfo.MakeGenericMethod(resultType);
             invocation.ReturnValue = mi.Invoke(this, new[] { invocation.ReturnValue, invocation });

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-//https://stackoverflow.com/a/39784559/7726468
+//https://github.com/castleproject/Core/issues/107
 namespace AutofacAsyncInterceptor
 {
     public class CallLoggerAsyncInterceptor : IInterceptor  
