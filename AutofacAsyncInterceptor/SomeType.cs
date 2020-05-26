@@ -7,8 +7,10 @@ namespace AutofacAsyncInterceptor
     {
         public Task<string> Show(string input)
         {
-            Console.WriteLine($"showdemo");
-            return Task.FromResult("resultdemo");
+            return Task.Factory.StartNew<string>(() =>
+            {
+                return "some type shows";
+            });
         }
     }
 }
