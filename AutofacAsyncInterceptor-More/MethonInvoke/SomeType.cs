@@ -5,10 +5,12 @@ namespace AutofacAsyncInterceptor
 {
     public class SomeType : ISomeType
     {
-        public async Task<string> Show(string input)
+        public Task<string> Show(string input)
         {
-            Console.WriteLine($"showdemo");
-            return await Task.FromResult("resultdemo");
+            return Task.Factory.StartNew<string>(() =>
+            {
+                return "some type shows";
+            });
         }
     }
 }

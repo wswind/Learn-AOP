@@ -30,9 +30,8 @@ namespace AutofacAsyncInterceptor
             }
 
             invocation.Proceed();
-            
 
-            var method = invocation.MethodInvocationTarget;
+            var method = invocation.MethodInvocationTarget;//warn: this will run the task
             var isAsync = method.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
             if (isAsync && typeof(Task).IsAssignableFrom(method.ReturnType))
             {
