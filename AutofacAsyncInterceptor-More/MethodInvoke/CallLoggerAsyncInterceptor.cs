@@ -22,27 +22,28 @@ namespace AutofacAsyncInterceptor
 
         public void Intercept(IInvocation invocation)
         {
-            Console.WriteLine("Intercept Begins");
-            _output.WriteLine("Calling method '{0}' with parameters '{1}'... ",
-                 invocation.Method.Name,
-                 string.Join(", ", invocation.Arguments.Select(a => (a ?? "").ToString()).ToArray()));
-
-            //if (IsEnabled(invocation))
-            //{
-            //    _output.WriteLine("Before Invocation");
-            //}
+            //Console.WriteLine("Intercept Begins");
+      
             Console.WriteLine("Proceed Begins");
             invocation.Proceed();
+            var ret = invocation.ReturnValue;
+            var retTask = (Task<string>)ret;
+            //var t = retTask.Result;
+            retTask.GetAwaiter().GetResult();
             Console.WriteLine("Proceed Ends");
-            Thread.Sleep(2000);
-            var taskType = invocation.Method.ReturnType;
-            Console.WriteLine("Intercept log 01");
-            var resultType = taskType.GetGenericArguments()[0];
-            Console.WriteLine("Intercept log 02");
-            var mi = HandleAsyncWithResultMethodInfo.MakeGenericMethod(resultType);
-            Console.WriteLine("Intercept log 03");
-            invocation.ReturnValue = mi.Invoke(this, new[] { invocation.ReturnValue, invocation });
-            Console.WriteLine("Intercept log 04");
+            //var ret = (Task<string>)invocation.ReturnValue;
+            //Console.WriteLine("Before get result");
+            //var str = ret.Result;
+            //Console.WriteLine("After get result");
+            //Thread.Sleep(2000);
+            //var taskType = invocation.Method.ReturnType;
+            //Console.WriteLine("Intercept log 01");
+            //var resultType = taskType.GetGenericArguments()[0];
+            //Console.WriteLine("Intercept log 02");
+            //var mi = HandleAsyncWithResultMethodInfo.MakeGenericMethod(resultType);
+            //Console.WriteLine("Intercept log 03");
+            //invocation.ReturnValue = mi.Invoke(this, new[] { invocation.ReturnValue, invocation });
+            //Console.WriteLine("Intercept log 04");
         }
 
 
