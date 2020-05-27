@@ -21,17 +21,18 @@ namespace AutofacAsyncInterceptor
 
         public void Intercept(IInvocation invocation)
         {
+            Console.WriteLine("Intercept Begins");
             _output.WriteLine("Calling method '{0}' with parameters '{1}'... ",
                  invocation.Method.Name,
                  string.Join(", ", invocation.Arguments.Select(a => (a ?? "").ToString()).ToArray()));
 
-            if (IsEnabled(invocation))
-            {
-                _output.WriteLine("Before Invocation");
-            }
-
+            //if (IsEnabled(invocation))
+            //{
+            //    _output.WriteLine("Before Invocation");
+            //}
+            Console.WriteLine("Proceed Begins");
             invocation.Proceed();
-
+            Console.WriteLine("Proceed Ends");
             var taskType = invocation.Method.ReturnType;//warnning:this line with make the task run
             var resultType = taskType.GetGenericArguments()[0];
             var mi = HandleAsyncWithResultMethodInfo.MakeGenericMethod(resultType);
@@ -41,7 +42,9 @@ namespace AutofacAsyncInterceptor
 
         private async Task<T> HandleAsyncWithResult<T>(Task<T> task, IInvocation invocation)
         {
+            Console.WriteLine("AutofacAsyncInterceptor HandleAsyncWithResult<T> Before await");
             var result = await task;
+            Console.WriteLine("AutofacAsyncInterceptor HandleAsyncWithResult<T> After await");
             if (IsEnabled(invocation))
             {
                 _output.WriteLine("After Invocation, Result is '{0}'.", result);

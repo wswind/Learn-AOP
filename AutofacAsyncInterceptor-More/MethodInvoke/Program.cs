@@ -7,12 +7,13 @@
 using Autofac;
 using Autofac.Extras.DynamicProxy;
 using System;
+using System.Threading.Tasks;
 
 namespace AutofacAsyncInterceptor
 {
     class Program
     {
-        static void Main(string[] args)
+        async static Task Main(string[] args)
         {
             // create builder
             var builder = new ContainerBuilder();
@@ -20,15 +21,13 @@ namespace AutofacAsyncInterceptor
             builder.RegisterType<SomeType>()
               .As<ISomeType>()
               .EnableInterfaceInterceptors();
-             
-            //register adapter
-           // builder.RegisterGeneric(typeof(AsyncInterceptorAdaper<>));
-            //register async interceptor
+
             builder.Register(c => new CallLoggerAsyncInterceptor(Console.Out));
 
             var container = builder.Build();
             var willBeIntercepted = container.Resolve<ISomeType>();
-            willBeIntercepted.Show("this is a test");
+            var val = await willBeIntercepted.Show("this is a test");
+            Console.WriteLine($"return value is {val}");
         }
     }
 }
