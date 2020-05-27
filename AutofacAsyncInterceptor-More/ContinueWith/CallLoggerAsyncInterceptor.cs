@@ -1,4 +1,4 @@
-﻿#define RUN_IT_NOW
+﻿//#define RUN_IT_NOW
 using Castle.DynamicProxy;
 using System;
 using System.IO;
