@@ -31,18 +31,21 @@ namespace AutofacAsyncInterceptor
             //}
             Console.WriteLine("before procced");
             invocation.Proceed();
-            //Thread.Sleep(3000);
             Console.WriteLine("after procced");
-            var returnValue = (Task<string>)invocation.ReturnValue;
 
+#if RUN_IT_NOW
+            Console.WriteLine("returnValue.Result Before");
+            var ret = returnValue.Result;
+            Console.WriteLine("returnValue.Result End");
+            invocation.ReturnValue = Task.FromResult("changed value");
+#else 
+            var returnValue = (Task<string>)invocation.ReturnValue;
             returnValue.ContinueWith(t =>
             {
-                _output.WriteLine("before continue with:" + t.Result);
-                return "changed value";
+                _output.WriteLine("continue with:" + t.Result);
+                return t;
             });
-
-            //var ret = returnValue.Result;
-            //invocation.ReturnValue = Task.FromResult("changed value");
+#endif
             Console.WriteLine("Invocation ends");
         }
 

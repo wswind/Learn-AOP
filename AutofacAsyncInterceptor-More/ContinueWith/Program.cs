@@ -28,8 +28,7 @@ namespace AutofacAsyncInterceptor
             var willBeIntercepted = container.Resolve<ISomeType>();
             Console.WriteLine("main - before call show");
             var val = await willBeIntercepted.Show("this is a test");
-            Console.WriteLine("main - after call show");
-            Console.WriteLine($"main return value is {val}");
+            Console.WriteLine($"main ends return value is {val}");
         }
 
      
