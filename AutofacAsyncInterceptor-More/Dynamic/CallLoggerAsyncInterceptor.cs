@@ -29,7 +29,6 @@ namespace AutofacAsyncInterceptor
             Console.WriteLine("before proceed");
             invocation.Proceed();
             Console.WriteLine("after proceed");
-            Thread.Sleep(2000);
             invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
             Console.WriteLine("Intercept Ends");
         }
@@ -41,10 +40,11 @@ namespace AutofacAsyncInterceptor
 
         private async Task<T> InterceptAsync<T>(Task<T> task)
         {
-            Console.WriteLine("InterceptAsync<T> Before Await");//error: the task runs eariler than this line
+            Console.WriteLine("InterceptAsync Before Await");//error: the task runs eariler than this line
             T result = await task.ConfigureAwait(false);
             // do the continuation work for Task<T>...
-            Console.WriteLine("InterceptAsync<T> After Await, Result is '{0}'.", result.ToString());
+            Console.WriteLine("InterceptAsync After Await, Result is '{0}'.", result.ToString());
+            result = (T)(object)"changed result";
             return result;
         }
 
