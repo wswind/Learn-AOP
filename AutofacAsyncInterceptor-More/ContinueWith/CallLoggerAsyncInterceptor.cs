@@ -39,7 +39,7 @@ namespace AutofacAsyncInterceptor
             invocation.ReturnValue = Task.FromResult("changed value");
 #else 
            
-            returnValue.ContinueWith(t =>
+            returnValue.ContinueWith(t => 
             {
                 _output.WriteLine("continue with:" + t.Result);
                 return t;
