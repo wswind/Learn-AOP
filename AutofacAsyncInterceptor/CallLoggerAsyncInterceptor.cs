@@ -34,9 +34,9 @@ namespace AutofacAsyncInterceptor
             }
             //invocation
 
-            Console.WriteLine("before task");
+            Console.WriteLine("before proceed");
             var result = await proceed(invocation).ConfigureAwait(false);
-            Console.WriteLine("after task");
+            Console.WriteLine("after proceed");
 
             //after invocation
             if (isEnabled)

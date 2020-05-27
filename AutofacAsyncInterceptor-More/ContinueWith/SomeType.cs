@@ -7,9 +7,9 @@ namespace AutofacAsyncInterceptor
     {
         public async Task<string> Show(string input)
         {
-            Console.WriteLine("Before Await");
+            Console.WriteLine("Show() Before Await");
             await Task.Delay(1000);
-            Console.WriteLine("After Await");
+            Console.WriteLine("Show() After Await");
             return "some type shows";
         }
     }
