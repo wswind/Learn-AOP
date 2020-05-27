@@ -28,7 +28,7 @@ namespace AutofacAsyncInterceptor
             var container = builder.Build();
             var willBeIntercepted = container.Resolve<ISomeType>();
             var result = await willBeIntercepted.Show("this is a test");
-            Console.WriteLine(result);
+            Console.WriteLine($"Main Ends With Return Value Is {result}");
         }
     }
 }
