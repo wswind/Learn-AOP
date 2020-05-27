@@ -56,7 +56,7 @@ namespace AutofacAsyncInterceptor
         }
 
     }
-#else
+#else //stop using AsyncInterceptorBase : https://github.com/JSkimming/Castle.Core.AsyncInterceptor/issues/60
     public class CallLoggerAsyncInterceptor : IAsyncInterceptor
     {
         TextWriter _output;
