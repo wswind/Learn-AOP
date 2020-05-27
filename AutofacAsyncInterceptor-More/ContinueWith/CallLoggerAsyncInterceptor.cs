@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 //https://github.com/castleproject/Core/issues/107
@@ -24,18 +25,25 @@ namespace AutofacAsyncInterceptor
                  invocation.Method.Name,
                  string.Join(", ", invocation.Arguments.Select(a => (a ?? "").ToString()).ToArray()));
 
-            if (IsEnabled(invocation))
-            {
-                _output.WriteLine("Before Invocation");
-            }
+            //if (IsEnabled(invocation))
+            //{
+            //    _output.WriteLine("Before Invocation");
+            //}
+            Console.WriteLine("before procced");
             invocation.Proceed();
+            //Thread.Sleep(3000);
+            Console.WriteLine("after procced");
             var returnValue = (Task<string>)invocation.ReturnValue;
-            //string str = returnValue.Result;
 
             returnValue.ContinueWith(t =>
             {
-                _output.WriteLine("After Invocation" + t.Result);
+                _output.WriteLine("before continue with:" + t.Result);
+                return "changed value";
             });
+
+            //var ret = returnValue.Result;
+            //invocation.ReturnValue = Task.FromResult("changed value");
+            Console.WriteLine("Invocation ends");
         }
 
         private bool IsEnabled(IInvocation invocation)
