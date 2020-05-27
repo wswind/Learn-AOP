@@ -29,9 +29,21 @@ namespace AutofacAsyncInterceptor
             Console.WriteLine("before proceed");
             invocation.Proceed();
             Console.WriteLine("after proceed");
-            invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
+            var method = invocation.MethodInvocationTarget;
+            var isAsync = method.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
+            if (isAsync && typeof(Task).IsAssignableFrom(method.ReturnType))
+            {
+                invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
+            }
+            else //Synchronous
+            {
+                
+            }
             Console.WriteLine("Intercept Ends");
         }
+
+
+
         private async Task InterceptAsync(Task task)
         {
             await task.ConfigureAwait(false);
