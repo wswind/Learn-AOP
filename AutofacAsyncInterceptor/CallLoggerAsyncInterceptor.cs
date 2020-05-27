@@ -18,6 +18,7 @@ namespace AutofacAsyncInterceptor
 
         protected override async Task<TResult> InterceptAsync<TResult>(IInvocation invocation, Func<IInvocation, Task<TResult>> proceed)
         {
+            Console.WriteLine("Begin Intercept");
            
             _output.WriteLine("Calling method '{0}' with parameters '{1}'... ",
                 invocation.Method.Name,
@@ -42,7 +43,8 @@ namespace AutofacAsyncInterceptor
             {
                 _output.WriteLine("Done: result was '{0}'.", result);
             }
-
+            //invocation.ReturnValue = Task.FromResult("changed value");
+            Console.WriteLine("End Intercept");
             return result;
         }
 

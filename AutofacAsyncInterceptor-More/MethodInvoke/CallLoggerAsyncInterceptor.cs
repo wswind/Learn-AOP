@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 //https://stackoverflow.com/a/28374134/7726468
@@ -33,6 +34,7 @@ namespace AutofacAsyncInterceptor
             Console.WriteLine("Proceed Begins");
             invocation.Proceed();
             Console.WriteLine("Proceed Ends");
+            Thread.Sleep(2000);
             var taskType = invocation.Method.ReturnType;
             Console.WriteLine("Intercept log 01");
             var resultType = taskType.GetGenericArguments()[0];

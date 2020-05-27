@@ -9,7 +9,7 @@ namespace AutofacAsyncInterceptor
         {
             return Task.Factory.StartNew<string>(() =>
             {
-                Console.WriteLine("run task");
+                Console.WriteLine("SomeType Show() Runs");
                 return "some type shows";
             });
         }
