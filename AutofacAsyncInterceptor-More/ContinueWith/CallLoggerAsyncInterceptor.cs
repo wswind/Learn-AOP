@@ -1,10 +1,8 @@
-﻿using Castle.DynamicProxy;
+﻿#define RUN_IT_NOW
+using Castle.DynamicProxy;
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 
 //https://github.com/castleproject/Core/issues/107
@@ -32,6 +30,7 @@ namespace AutofacAsyncInterceptor
             Console.WriteLine("before procced");
             invocation.Proceed();
             Console.WriteLine("after procced");
+            var returnValue = (Task<string>)invocation.ReturnValue;
 
 #if RUN_IT_NOW
             Console.WriteLine("returnValue.Result Before");
@@ -39,7 +38,7 @@ namespace AutofacAsyncInterceptor
             Console.WriteLine("returnValue.Result End");
             invocation.ReturnValue = Task.FromResult("changed value");
 #else 
-            var returnValue = (Task<string>)invocation.ReturnValue;
+           
             returnValue.ContinueWith(t =>
             {
                 _output.WriteLine("continue with:" + t.Result);
