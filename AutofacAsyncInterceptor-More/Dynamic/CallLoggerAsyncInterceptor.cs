@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 //https://stackoverflow.com/a/39784559/7726468
+//need Microsoft.CSharp package for .net standard projects
 namespace AutofacAsyncInterceptor
 {
     public class CallLoggerAsyncInterceptor : InterceptorBase
