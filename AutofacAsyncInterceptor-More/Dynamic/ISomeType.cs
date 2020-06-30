@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 
 namespace AutofacAsyncInterceptor
 {
-    [Intercept(typeof(CallLoggerAsyncInterceptor))]
     public interface ISomeType
     {
-        [Custom(StartLog = true)]
-        Task<string> Show(string input);
+        Task<string> ShowAsync(string input);
+        Task ShowAsync2(string input);
+        void ShowSynchronous(string input);
     }
 }

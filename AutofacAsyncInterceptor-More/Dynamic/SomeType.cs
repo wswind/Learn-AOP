@@ -5,12 +5,26 @@ namespace AutofacAsyncInterceptor
 {
     public class SomeType : ISomeType
     {
-        public async Task<string> Show(string input)
+        public async Task<string> ShowAsync(string input)
         {
-            Console.WriteLine("Show() Before Await");
+            Console.WriteLine("Task<string> ShowAsync(string input) Before Await");
             await Task.Delay(1000);
-            Console.WriteLine("Show() After Await");
-            return "some type shows";
+            Console.WriteLine("Task<string> ShowAsync(string input) After Await");
+            return "some type shows";//change return value
         }
+
+        public async Task ShowAsync2(string input)
+        {
+            Console.WriteLine("Task ShowAsync(string input) Before Await");
+            await Task.Delay(1000);
+            Console.WriteLine("Task ShowAsync(string input) After Await");
+        }
+
+        public void ShowSynchronous(string input)
+        {
+            Console.WriteLine("ShowSynchronous");
+        }
+
+    
     }
 }

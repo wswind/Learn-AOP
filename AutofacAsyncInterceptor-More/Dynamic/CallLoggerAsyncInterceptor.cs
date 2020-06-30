@@ -20,59 +20,42 @@ namespace AutofacAsyncInterceptor
 
         public void Intercept(IInvocation invocation)
         {
-            Console.WriteLine("Intercept Begins");
-            _output.WriteLine("Calling method '{0}' with parameters '{1}'... ",
-                 invocation.Method.Name,
-                 string.Join(", ", invocation.Arguments.Select(a => (a ?? "").ToString()).ToArray()));
-
-            Console.WriteLine("before proceed");
-            invocation.Proceed();
-            Console.WriteLine("after proceed");
             var method = invocation.MethodInvocationTarget;
             var isAsync = method.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
             if (isAsync && typeof(Task).IsAssignableFrom(method.ReturnType))
             {
+                invocation.Proceed();
                 invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
             }
-            else //Synchronous
+            else 
             {
-                
+                InterceptSynchronous(invocation);
             }
             Console.WriteLine("Intercept Ends");
         }
 
-
+        private void InterceptSynchronous(IInvocation invocation)
+        {
+            _output.WriteLine("InterceptSynchronous Before");
+            invocation.Proceed();
+            _output.WriteLine("InterceptSynchronous After");
+        }
 
         private async Task InterceptAsync(Task task)
         {
+            _output.WriteLine("Task InterceptAsync Before");
             await task.ConfigureAwait(false);
-            // do the continuation work for Task...
+            _output.WriteLine("Task InterceptAsync After");
         }
 
         private async Task<T> InterceptAsync<T>(Task<T> task)
         {
-            Console.WriteLine("InterceptAsync Before Await");//error: the task runs eariler than this line
+            _output.WriteLine("Task<T> InterceptAsync Before Await");//error: the task runs eariler than this line
             T result = await task.ConfigureAwait(false);
-            // do the continuation work for Task<T>...
-            Console.WriteLine("InterceptAsync After Await, Result is '{0}'.", result.ToString());
+            _output.WriteLine("Task<T> InterceptAsync After Await, Result is '{0}'.", result.ToString());
             result = (T)(object)"changed result";
             return result;
         }
 
-        private async Task<T> HandleAsyncWithResult<T>(Task<T> task, IInvocation invocation)
-        {
-            var result = await task;
-            if (IsEnabled(invocation))
-            {
-                _output.WriteLine("After Invocation, Result is '{0}'.", result);
-            }
-            return result;
-        }
-
-        private bool IsEnabled(IInvocation invocation)
-        {
-            bool isEnabled = AttributeHelper.IsLoggerEnabled(invocation.Method);
-            return isEnabled;
-        }
     }
 }
