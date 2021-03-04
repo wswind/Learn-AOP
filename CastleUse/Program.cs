@@ -14,6 +14,7 @@ namespace CastleUse
             var svc2 = proxyGenerator.CreateInterfaceProxyWithTarget<IHelloClient>(new HelloClient(), new MyInterceptorAspect());
             //difference between CreateInterfaceProxyWithTargetInterface see:
             //https://kozmic.net/2009/11/13/interfaceproxywithtarget-interfaceproxywithtargetinterface-ndash-whatrsquos-the-difference/
+            //https://www.cnblogs.com/DjlNet/p/7603654.html
             svc2.Hello();
         }
     }
