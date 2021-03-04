@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.DynamicProxy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,7 +34,18 @@ namespace castlecoresample
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "castlecoresample", Version = "v1" });
             });
 
-            services.AddTransient<IHelloRobot,HelloRobot>();
+            //without proxy:
+            //services.AddTransient<IHelloRobot,HelloRobot>();
+
+            //with proxy:
+            services.AddSingleton<ProxyGenerator>();
+            services.AddTransient<IHelloRobot>(sp =>
+            {
+                var pg = sp.GetRequiredService<ProxyGenerator>();
+                var actual = new HelloRobot();
+                var serv = pg.CreateInterfaceProxyWithTarget<IHelloRobot>(new HelloRobot(), new MyInterceptor());
+                return serv;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
