@@ -50,7 +50,7 @@ namespace castlecoresample
             services.AddDynamicProxyService<IHelloRobot>(sp => {
                 var actual = new HelloRobot();
                 return actual;
-            }, new MyInterceptor());
+            }, ServiceLifetime.Transient , new MyInterceptor());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
