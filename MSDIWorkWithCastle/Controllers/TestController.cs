@@ -24,7 +24,6 @@ namespace castlecoresample.Controllers
         public async Task<string> Get()
         {
             _hello.Hello();
-
             await _hello.Hello2();
             await _hello.Hello3();
             return "ok";            
