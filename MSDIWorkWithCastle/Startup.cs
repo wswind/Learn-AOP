@@ -37,14 +37,20 @@ namespace castlecoresample
             //services.AddTransient<IHelloRobot,HelloRobot>();
 
             //with proxy:
-            services.AddSingleton<ProxyGenerator>();
-            services.AddTransient<IHelloRobot>(sp =>
-            {
-                var pg = sp.GetRequiredService<ProxyGenerator>();
+            // services.AddSingleton<ProxyGenerator>();
+            // services.AddTransient<IHelloRobot>(sp =>
+            // {
+            //     var pg = sp.GetRequiredService<ProxyGenerator>();
+            //     var actual = new HelloRobot();
+            //     var serv = pg.CreateInterfaceProxyWithTarget<IHelloRobot>(new HelloRobot(), new MyInterceptor());
+            //     return serv;
+            // });
+
+            //use extension:
+            services.AddDynamicProxyService<IHelloRobot>(sp => {
                 var actual = new HelloRobot();
-                var serv = pg.CreateInterfaceProxyWithTarget<IHelloRobot>(new HelloRobot(), new MyInterceptor());
-                return serv;
-            });
+                return actual;
+            }, new MyInterceptor());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
